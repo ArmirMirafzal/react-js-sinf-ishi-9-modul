@@ -12,6 +12,13 @@ export namespace IEntity {
 		dailyRentalRate: number;
 		username: string;
 	}
+
+	export type User = {
+		_id: string;
+		name: string;
+		email: string;
+		isAdmin: boolean;
+	} | null;
 }
 
 export namespace IApi {
@@ -45,9 +52,32 @@ export namespace IApi {
 			}
 			export type Response = IEntity.Movie;
 		}
+
+		export namespace Create {
+			export interface Request extends Params {}
+			export interface Params {
+				title: string;
+				genreId: string;
+				numberInStock: number;
+				dailyRentalRate: number;
+				accessToken: string;
+			}
+			export type Response = IEntity.Movie;
+		}
 	}
 
 	export namespace Auth {
+		export namespace Login {
+			export interface Request extends Params {}
+			export interface Params {
+				email: string;
+				password: string;
+			}
+			export interface Response {
+				data: string;
+			}
+		}
+
 		export namespace Register {
 			export interface Request extends Params {}
 			export interface Params {
@@ -62,15 +92,12 @@ export namespace IApi {
 			}
 		}
 
-		export namespace Login {
+		export namespace GetMe {
 			export interface Request extends Params {}
 			export interface Params {
-				email: string;
-				password: string;
+				accessToken: string;
 			}
-			export interface Response {
-				data: string;
-			}
+			export type Response = IEntity.User;
 		}
 	}
 }

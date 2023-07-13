@@ -1,5 +1,6 @@
 import { Component, FormEventHandler } from "react";
-import { RegisterApi } from "services/auth";
+import { toast } from "react-hot-toast";
+import { Auth } from "services";
 
 interface RegisterState {
 	username: string;
@@ -7,17 +8,31 @@ interface RegisterState {
 	name: string;
 }
 
-export default class Register extends Component<{}, RegisterState> {
+interface RegisterProps {
+	onNavigate: (pathname: string) => void;
+}
+
+export default class Register extends Component<RegisterProps, RegisterState> {
 	state: RegisterState = {
 		username: "",
 		password: "",
 		name: "",
 	};
 
-	handleSubmit: FormEventHandler = async(e) => {
+	handleSubmit: FormEventHandler = async (e) => {
 		e.preventDefault();
-		const { data: auth } = await RegisterApi();
-		console.log("data = ", this.state);
+		try {
+			await Auth.Register({
+				name: this.state.name,
+				email: this.state.username,
+				password: this.state.password,
+			});
+
+			toast.success("Successfully registered");
+			this.props.onNavigate("/login");
+		} catch (err: any) {
+			toast.error(err?.response?.data);
+		}
 	};
 
 	renderInput = (name: keyof RegisterState, label: string, type = "text") => {
