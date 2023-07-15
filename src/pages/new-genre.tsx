@@ -73,7 +73,7 @@ render() {
 
 		return (
 			<>
-				<h1>Create Movie</h1>
+				<h1>Create Genre</h1>
 				<form onSubmit={this.handleSubmit}>
 					{this.renderInput("name", "Name")}
 					<button className="btn btn-primary" disabled={isCreating}>
