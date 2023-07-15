@@ -11,3 +11,8 @@ root.render(
 		<Toaster />
 	</>
 );
+
+
+// git remote remove origin
+
+// git remote add origin https://github.com/ArmirMirafzal/react-js-sinf-ishi-9-modul.git

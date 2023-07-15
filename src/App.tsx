@@ -7,6 +7,7 @@ import { Auth } from "services";
 import { toast } from "react-hot-toast";
 import { delay } from "utils";
 import EditMovie from "./pages/edit-movie";
+import NewGenre from './pages/new-genre';
 
 interface AppState {
 	pathname: string;
@@ -60,6 +61,13 @@ export default class App extends Component<{}, AppState> {
 					return null;
 				}
 				return <NewMovie onNavigate={this.handleNavigate} />;
+
+				case "/new-genre":
+				if (!user) {
+					this.handleNavigate("/");
+					return null;
+				}
+				return <NewGenre onNavigate={this.handleNavigate} />;
 
 			case `/edit-movie`:
 				if (!user) {
