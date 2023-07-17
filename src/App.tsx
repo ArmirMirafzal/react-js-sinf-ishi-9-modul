@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { Component } from "react";
+import Sudoku from "./components/sudoku";
 
-const App = () => {
-		return (
-				<div>
+export type Tboard = number[];
 
-				</div>
-		)
+interface SudokuState {
+	sudoku: Tboard[];
 }
 
-export default App
+let count = 1;
+
+export default class app extends Component<{}, SudokuState> {
+	state: SudokuState = {
+		sudoku: new Array(9).fill(null).map(() => new Array(9).fill(null).map(() => count++)),
+	};
+
+	render() {
+		return (
+			<>
+				<Sudoku sudoku={this.state.sudoku}/>
+			</>
+		);
+	}
+}

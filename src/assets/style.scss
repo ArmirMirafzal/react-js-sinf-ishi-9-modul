@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	display: grid;
+	place-items: center;
+	height: 100vh;
+}
+
+.sudoku {
+	width: 500px;
+	height: 500px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	border: 2px solid gray;
+
+	.board {
+		border: 2px solid lightgray;
+		display: grid;
+		place-items: center;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+		.cell {
+			width: 52px;
+			height: 52px;
+			border: 1px solid lightgray;
+			font-size: 20px;
+			font-weight: bold;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}
