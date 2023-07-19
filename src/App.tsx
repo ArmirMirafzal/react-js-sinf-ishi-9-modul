@@ -1,23 +1,64 @@
-import React, { Component } from "react";
-import Sudoku from "./components/sudoku";
+import { Component } from "react";
+import { config } from "config";
+import { toast } from "react-hot-toast";
+import Routes from "routes";
+import { Auth } from "services";
+import { IEntity } from "types";
 
-export type Tboard = number[];
+import { Loader, Navbar } from "components";
 
-interface SudokuState {
-	sudoku: Tboard[];
+interface AppState {
+	user: IEntity.User;
+	isLoading: boolean;
 }
 
-let count = 1;
+export default class App extends Component<{}, AppState> {
+	constructor(props: {}) {
+		super(props);
 
-export default class app extends Component<{}, SudokuState> {
-	state: SudokuState = {
-		sudoku: new Array(9).fill(null).map(() => new Array(9).fill(null).map(() => count++)),
+		this.state = {
+			user: null,
+			isLoading: true,
+		};
+	}
+
+	handleLogin = (user: IEntity.User) => {
+		this.setState({ user });
 	};
 
+	handleLogout = () => {
+		localStorage.removeItem(config.tokenKEY);
+		this.setState({ user: null });
+	};
+
+	async componentDidMount() {
+		const accessToken = localStorage.getItem(config.tokenKEY)!;
+
+		try {
+			if (accessToken) {
+				const { data: user } = await Auth.GetMe({ accessToken });
+
+				this.setState({ user, isLoading: false });
+			}
+		} catch (err: any) {
+			localStorage.removeItem(config.tokenKEY);
+			toast.error(err?.response?.data);
+		} finally {
+			this.setState({ isLoading: false });
+		}
+	}
+
 	render() {
+		const { user, isLoading } = this.state;
+
+		if (isLoading) return <Loader />;
+
 		return (
 			<>
-				<Sudoku sudoku={this.state.sudoku}/>
+				<Navbar onLogout={this.handleLogout} user={user} />
+				<div className="container">
+					<Routes onLogin={this.handleLogin} user={user} />
+				</div>
 			</>
 		);
 	}
