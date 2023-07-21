@@ -36,7 +36,7 @@ export default class App extends Component<{}, AppState> {
 
 		try {
 			if (accessToken) {
-				const { data: user } = await Auth.GetMe({ accessToken });
+				const { data: user } = await Auth.GetMe();
 
 				this.setState({ user, isLoading: false });
 			}

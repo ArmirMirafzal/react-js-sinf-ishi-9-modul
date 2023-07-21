@@ -24,14 +24,12 @@ export namespace IEntity {
 export namespace IApi {
 	export namespace Genre {
 		export namespace List {
-			export interface Request extends Params {}
-			export interface Params {}
+			export interface Request {}
 			export type Response = IEntity.Genre[];
 		}
 
 		export namespace Single {
-			export interface Request extends Params {}
-			export interface Params {
+			export interface Request {
 				genreID: string;
 			}
 			export type Response = IEntity.Genre;
@@ -40,51 +38,48 @@ export namespace IApi {
 
 	export namespace Movie {
 		export namespace List {
-			export interface Request extends Params {}
-			export interface Params {}
+			export interface Request {}
 			export type Response = IEntity.Movie[];
 		}
 
 		export namespace Single {
-			export interface Request extends Params {}
-			export interface Params {
+			export interface Request {
 				movieID: string;
 			}
 			export type Response = IEntity.Movie;
 		}
 
 		export namespace Create {
-			export interface Request extends Params {}
-			export interface Params {
+			export interface Request {
 				title: string;
 				genreId: string;
 				numberInStock: number;
 				dailyRentalRate: number;
-				accessToken: string;
 			}
+
 			export type Response = IEntity.Movie;
 		}
 	}
 
 	export namespace Auth {
 		export namespace Login {
-			export interface Request extends Params {}
-			export interface Params {
+			export interface Request {
 				email: string;
 				password: string;
 			}
+
 			export interface Response {
 				data: string;
 			}
 		}
 
 		export namespace Register {
-			export interface Request extends Params {}
-			export interface Params {
+			export interface Request {
 				name: string;
 				email: string;
 				password: string;
 			}
+
 			export interface Response {
 				_id: string;
 				name: string;
@@ -93,10 +88,7 @@ export namespace IApi {
 		}
 
 		export namespace GetMe {
-			export interface Request extends Params {}
-			export interface Params {
-				accessToken: string;
-			}
+			export interface Request {}
 			export type Response = IEntity.User;
 		}
 	}

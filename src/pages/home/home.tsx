@@ -88,7 +88,7 @@ export default class Home extends Component<HomeProps, HomeState> {
 				</div>
 				<div className="col">
 					{user && (
-						<Link to="/new-movie" className="btn btn-primary mb-4">
+						<Link to="create" className="btn btn-primary mb-4">
 							New Movie
 						</Link>
 					)}

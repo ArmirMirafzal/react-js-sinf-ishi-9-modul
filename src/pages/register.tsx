@@ -1,59 +1,30 @@
-import { Component, FormEventHandler } from "react";
 import { toast } from "react-hot-toast";
 import { Auth } from "services";
 
+import { Form } from "components";
+
 interface RegisterState {
-	username: string;
+	email: string;
 	password: string;
 	name: string;
 }
 
 interface RegisterProps {}
 
-export default class Register extends Component<RegisterProps, RegisterState> {
+export default class Register extends Form<RegisterProps, RegisterState> {
 	state: RegisterState = {
-		username: "",
+		email: "",
 		password: "",
 		name: "",
 	};
 
-	handleSubmit: FormEventHandler = async (e) => {
-		e.preventDefault();
+	onSubmit = async ({ name, email, password }: RegisterState) => {
 		try {
-			await Auth.Register({
-				name: this.state.name,
-				email: this.state.username,
-				password: this.state.password,
-			});
-
+			await Auth.Register({ name, email, password });
 			toast.success("Successfully registered");
 		} catch (err: any) {
 			toast.error(err?.response?.data);
 		}
-	};
-
-	renderInput = (name: keyof RegisterState, label: string, type = "text") => {
-		const value = this.state[name];
-
-		return (
-			<div className="form-group">
-				<label htmlFor={name}>{label}</label>
-				<input
-					type={type}
-					id={name}
-					name={name}
-					className="form-control"
-					value={value}
-					onChange={(e) => {
-						const state = {} as RegisterState;
-
-						state[name] = e.target.value;
-
-						this.setState(state);
-					}}
-				/>
-			</div>
-		);
 	};
 
 	render() {
@@ -61,10 +32,10 @@ export default class Register extends Component<RegisterProps, RegisterState> {
 			<>
 				<h1>Register</h1>
 				<form onSubmit={this.handleSubmit}>
-					{this.renderInput("username", "Username")}
+					{this.renderInput("email", "Email")}
 					{this.renderInput("name", "Name")}
 					{this.renderInput("password", "Password", "password")}
-					<button className="btn btn-primary">Register</button>
+					{this.renderSubmit("Register")}
 				</form>
 			</>
 		);

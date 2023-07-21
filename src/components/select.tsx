@@ -7,9 +7,10 @@ interface SelectProps {
 	value: string | number;
 	onChange?: ChangeEventHandler<HTMLSelectElement>;
 	options: IEntity.Genre[];
+	error?: string;
 }
 
-const Select = ({ name, label, value, onChange, options }: SelectProps) => (
+const Select = ({ name, label, value, onChange, options, error }: SelectProps) => (
 	<div className="form-group">
 		<label htmlFor={name}>{label}</label>
 		<select id={name} name={name} value={value} className="form-select" onChange={onChange}>
@@ -20,6 +21,8 @@ const Select = ({ name, label, value, onChange, options }: SelectProps) => (
 				</option>
 			))}
 		</select>
+
+		{error && <div id={name} className="d-block invalid-feedback" children={error} />}
 	</div>
 );
 

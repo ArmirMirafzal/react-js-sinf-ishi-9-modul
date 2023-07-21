@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes as Switch } from "react-router-dom";
-import { Home, Login, NewMovie, Register } from "pages";
+import { CreateMovie, Home, Login, Register } from "pages";
 import { IEntity } from "types";
 
 interface RoutesProps {
@@ -9,11 +9,14 @@ interface RoutesProps {
 
 const Routes = ({ user, onLogin }: RoutesProps) => (
 	<Switch>
-		<Route path="" element={<Home user={user} />} />
-		<Route path="new-movie" element={user ? <NewMovie /> : <Navigate to="/login" />} />
-		<Route path="login" element={user ? <Navigate to="/" /> : <Login onLogin={onLogin} />} />
-		<Route path="register" element={user ? <Navigate to="/" /> : <Register />} />
-		<Route path="*" element={<Navigate to="/" />} />
+		<Route path="/movies">
+			<Route index element={<Home user={user} />} />
+			<Route path="create" element={user ? <CreateMovie /> : <Navigate to="/login" />} />
+		</Route>
+
+		<Route path="login" element={user ? <Navigate to="/movies" /> : <Login onLogin={onLogin} />} />
+		<Route path="register" element={user ? <Navigate to="/movies" /> : <Register />} />
+		<Route path="*" element={<Navigate to="/movies" />} />
 	</Switch>
 );
 
